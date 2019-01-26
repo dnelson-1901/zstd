@@ -181,6 +181,7 @@ void BMK_freeTimedFnState(BMK_timedFnState_t* state) {
 BMK_timedFnState_t* BMK_initStatic_timedFnState(void* buffer, size_t size, unsigned total_ms, unsigned run_ms)
 {
     BMK_timedFnState_t* const r = (BMK_timedFnState_t*)buffer;
+    typedef char timedFnState_staticSize_isLargeEnough[(sizeof(BMK_timedFnState_shell) >= sizeof(struct BMK_timedFnState_s))?1:-1]; /* static assert */
     if (size < sizeof(struct BMK_timedFnState_s)) return NULL;
     if ((size_t)buffer % 8) return NULL;  /* must be aligned on 8-bytes boundaries */
     BMK_resetTimedFnState(r, total_ms, run_ms);
